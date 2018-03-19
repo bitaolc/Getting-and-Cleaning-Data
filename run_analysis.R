@@ -50,12 +50,7 @@ mean_and_std <- (grepl("activityId" , colNames) |
 )
 MeanAndStd <- setAllInOne[ , mean_and_std == TRUE]
 
-#activity
-ActivityNames <- merge(MeanAndStd, activityLabels,
-                       by='activityId',
-                       all.x=TRUE)
-
 #create tidy dataset
-TidySet <- aggregate(. ~subjectId + activityId, ActivityNames, mean)
+TidySet <- aggregate(. ~subjectId + activityId, MeanAndStd, mean)
 TidySet <- TidySet[order(TidySet$subjectId, TidySet$activityId),]
 write.table(TidySet, "TidySet.txt", row.name=FALSE)
